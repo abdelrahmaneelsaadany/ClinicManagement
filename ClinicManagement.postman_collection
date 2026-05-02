@@ -1,0 +1,888 @@
+{
+  "info": {
+    "_postman_id": "510e4d47-6696-47ad-ab8b-402bfc4c6dd2",
+    "name": "My Collection",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "54308028",
+    "_collection_link": "https://go.postman.co/collection/54308028-510e4d47-6696-47ad-ab8b-402bfc4c6dd2?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register-Doctor",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"karim@gmail.com\",\r\n  \"firstName\": \"Karim\",\r\n  \"password\": \"Karimahmed88\",\r\n  \"lastName\": \"Ahmed\",\r\n  \"country\": \"Egypt\",\r\n  \"role\": \"Doctor\",\r\n  \"address\": \"Cairo\",\r\n  \"specialization\": \"Cardiology\",\r\n  \"yearsExperience\": 7\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/auth/auth/register/doctor",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "auth",
+                "auth",
+                "register",
+                "doctor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"karim@gmail.com\",\r\n  \"password\": \"Karimahmed88\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/auth/auth/login",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "auth",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh-Token",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"token\": \"string\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/auth/auth/refresh-token",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "auth",
+                "auth",
+                "refresh-token"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Register-Patient",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"email\": \"ali@gmail.com\",\r\n  \"password\": \"Alireda88\",\r\n  \"firstName\": \"Ali\",\r\n  \"lastName\": \"Reda\",\r\n  \"country\": \"Egypt\",\r\n  \"role\": \"Patient\",\r\n  \"address\": \"Giza\",\r\n  \"gender\": \"Male\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/auth/auth/register/patient",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "auth",
+                "auth",
+                "register",
+                "patient"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Appointments",
+      "item": [
+        {
+          "name": "Book-Appointment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": \"febd0e8f-4490-40de-8837-b75bfda91f00\",\r\n  \"doctorId\": \"7c93ea8c-f184-4143-a81a-9d137be78cad\",\r\n  \"appointmentDt\": \"2026-05-03T13:00:00.167Z\",\r\n  \"notes\": \"I Feel Colddd\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Complete-Appointment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"prescriptions\": [\r\n    {\r\n      \"medicationName\": \"Cold And Flu\",\r\n      \"dosage\": \"Cold\",\r\n      \"frequency\": \"4\",\r\n      \"durationDays\": 4,\r\n      \"notes\": \"Keep Take a Midicin\"\r\n    }\r\n  ],\r\n  \"status\": \"Completed\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment/complete/9690a96f-f1e0-4435-8c0c-83d2d29a5cfd",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment",
+                "complete",
+                "9690a96f-f1e0-4435-8c0c-83d2d29a5cfd"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reschdule-aapointment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"newDateTime\": \"2026-04-26T13:00:00.167Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment/reschedule/0897bd1a-312b-4eae-b3dd-1d7b5069ea11",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment",
+                "reschedule",
+                "0897bd1a-312b-4eae-b3dd-1d7b5069ea11"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-MyAppointment",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment/patientId",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment",
+                "patientId"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment/id",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment",
+                "id"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel-appointment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment/cancel/960d6937-eb4a-4626-848c-6c26ccbc5ba0",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment",
+                "cancel",
+                "960d6937-eb4a-4626-848c-6c26ccbc5ba0"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-DoctorId",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/appointment/doctorId",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "appointment",
+                "doctorId"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "DoctorSchdule",
+      "item": [
+        {
+          "name": "Add-Schedule",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"doctorUserId\": \"7c93ea8c-f184-4143-a81a-9d137be78cad\",\r\n  \"weekDay\": \"Sunday\",\r\n  \"startTime\": \"10:00:00\",\r\n  \"endTime\": \"17:00:00\",\r\n  \"slotDurationMinutes\": 30,\r\n  \"isActive\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctorSchedule",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctorSchedule"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-MySchdule",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctorSchedule/doctor",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctorSchedule",
+                "doctor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Active",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctorSchedule/active",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctorSchedule",
+                "active"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Day",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctorSchedule/active?Day",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctorSchedule",
+                "active"
+              ],
+              "query": [
+                {
+                  "key": "Day",
+                  "value": null,
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-toggle-active",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctorSchedule/toggle-active/82cc532f-393c-4d17-8f1f-3d042ca16481?active=false",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctorSchedule",
+                "toggle-active",
+                "82cc532f-393c-4d17-8f1f-3d042ca16481"
+              ],
+              "query": [
+                {
+                  "key": "active",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Doctor",
+      "item": [
+        {
+          "name": "Set-availability",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctor/availability?available=false",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctor",
+                "availability"
+              ],
+              "query": [
+                {
+                  "key": "available",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctor/7c93ea8c-f184-4143-a81a-9d137be78cad",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctor",
+                "7c93ea8c-f184-4143-a81a-9d137be78cad"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Available",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctor/available",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctor",
+                "available"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-specialization",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/doctor/specialization?specialization=Cardiology",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "doctor",
+                "specialization"
+              ],
+              "query": [
+                {
+                  "key": "specialization",
+                  "value": "Cardiology"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Prescription",
+      "item": [
+        {
+          "name": "GET-Prescription-ID",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": \"febd0e8f-4490-40de-8837-b75bfda91f00\",\r\n  \"doctorId\": \"7c93ea8c-f184-4143-a81a-9d137be78cad\",\r\n  \"appointmentDt\": \"2026-05-03T13:00:00.167Z\",\r\n  \"notes\": \"I Feel Colddd\"\r\n}"
+            },
+            "url": {
+              "raw": "{{Base-url}}/pescription/{prescriptionId}",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "pescription",
+                "{prescriptionId}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Prescription-PatientId",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": \"febd0e8f-4490-40de-8837-b75bfda91f00\",\r\n  \"doctorId\": \"7c93ea8c-f184-4143-a81a-9d137be78cad\",\r\n  \"appointmentDt\": \"2026-05-03T13:00:00.167Z\",\r\n  \"notes\": \"I Feel Colddd\"\r\n}"
+            },
+            "url": {
+              "raw": "{{Base-url}}/pescription/patient",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "pescription",
+                "patient"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Prescription-DoctorId",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{Base-url}}/Prescription/doctor",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "Prescription",
+                "doctor"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "GET-Prescription-appointment",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"patientId\": \"febd0e8f-4490-40de-8837-b75bfda91f00\",\r\n  \"doctorId\": \"7c93ea8c-f184-4143-a81a-9d137be78cad\",\r\n  \"appointmentDt\": \"2026-05-03T13:00:00.167Z\",\r\n  \"notes\": \"I Feel Colddd\"\r\n}"
+            },
+            "url": {
+              "raw": "{{Base-url}}/Prescription/appointment/e1e29454-4ab5-4466-ae94-d4864f4b1bba",
+              "host": [
+                "{{Base-url}}"
+              ],
+              "path": [
+                "Prescription",
+                "appointment",
+                "e1e29454-4ab5-4466-ae94-d4864f4b1bba"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
