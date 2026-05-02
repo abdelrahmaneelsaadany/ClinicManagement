@@ -22,8 +22,6 @@ namespace ClinicManagement.Api
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
-            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -47,7 +45,7 @@ namespace ClinicManagement.Api
                     sql => sql.EnableRetryOnFailure(3)
                 )
             );
-
+            var key = builder.Configuration["Jwt:Secret"] ?? throw new Exception("JWT Secret missing");
             builder.Services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -63,7 +61,7 @@ namespace ClinicManagement.Api
                         IssuerSigningKey =
                             new SymmetricSecurityKey(
                                 Encoding.UTF8.GetBytes(
-                                    builder.Configuration["Jwt:Secret"]))
+                                    key))
                     };
                 });
             builder.Services.AddAuthorization();
@@ -106,13 +104,27 @@ namespace ClinicManagement.Api
             {
                 options.AddPolicy("Dev", policy =>
                 {
-                    policy.WithOrigins("http://localhost:3000")
+                    policy.AllowAnyOrigin()
                           .AllowAnyHeader()
-                          .AllowAnyMethod();
+                           .AllowAnyMethod();
                 });
             });
 
             var app = builder.Build();
+            using (var scope = app.Services.CreateScope())
+            {
+                try
+                {
+                    var db = scope.ServiceProvider.GetRequiredService<ApplicationDBContext>();
+                    db.Database.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "Migration failed");
+
+                }
+            }
             app.UseCors("Dev");
             // ── Configure the HTTP request pipeline ──────────────────────────────────────────────────────────────────
             if (app.Environment.IsDevelopment())
@@ -121,11 +133,9 @@ namespace ClinicManagement.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
-            app.UseMiddleware<ExeptionMiddleware>();
-            app.UseCors("AllowFrontend");
-
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();
 

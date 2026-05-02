@@ -3,12 +3,12 @@ using System.Text.Json;
 
 namespace ClinicManagement.Api.Middleware
 {
-    public class ExeptionMiddleware
+    public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger<ExeptionMiddleware> _logger;
+        private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExeptionMiddleware(RequestDelegate requestDelegate, ILogger<ExeptionMiddleware> logger)
+        public ExceptionMiddleware(RequestDelegate requestDelegate, ILogger<ExceptionMiddleware> logger)
         {
             _next = requestDelegate;
             _logger = logger;
