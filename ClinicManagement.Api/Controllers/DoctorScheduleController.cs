@@ -1,4 +1,5 @@
-﻿using ClinicManagement.Application.DTO;
+﻿using ClinicManagement.Api.Authorization;
+using ClinicManagement.Application.DTO;
 using ClinicManagement.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,11 @@ namespace ClinicManagement.Api.Controllers
     public class DoctorScheduleController : BaseController
     {
         private readonly IDoctorScheduleService _doctorSchedule;
-
-        public DoctorScheduleController(IDoctorScheduleService doctorSchedule)
+        private readonly IAuthorizationService _authorizationService;
+        public DoctorScheduleController(IDoctorScheduleService doctorSchedule, IAuthorizationService authorizationService)
         {
             _doctorSchedule = doctorSchedule;
+            _authorizationService = authorizationService;
         }
 
         [Authorize(Roles = "Admin,Doctor")]
@@ -41,6 +43,12 @@ namespace ClinicManagement.Api.Controllers
         [HttpPut("toggle-active/{Id}")]
         public async Task<IActionResult> ToggleActive(Guid Id, [FromQuery] bool active)
         {
+            var schedule = await _doctorSchedule.GetByIdAsync(Id);
+            if (!schedule.Succeeded)
+                return ToResponse(schedule);
+            var authResult = await _authorizationService.AuthorizeAsync(User, schedule, new ScheduleOwnerRequirement());
+            if (!authResult.Succeeded)
+                return Forbid();
             return ToResponse(await _doctorSchedule.EditActiveSlotsAsync(Id, active));
         }
     }

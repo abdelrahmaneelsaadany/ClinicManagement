@@ -14,6 +14,13 @@ namespace ClinicManagement.Application.Service
             _unitOfWork = unitOfWork;
         }
 
+        public async Task<Result<DoctorScheduleResponse>> GetByIdAsync(Guid Id)
+        {
+            var schedule = await _unitOfWork.Schedules.GetByIdAsync(Id);
+            if (schedule == null)
+                return Result<DoctorScheduleResponse>.NotFound("Invalid Schedule Id");
+            return Result<DoctorScheduleResponse>.Success(MapSchedule(schedule));
+        }
         public async Task<Result<DoctorScheduleResponse>> AddAsync(DoctorScheduleReq req)
         {
             if (req == null)

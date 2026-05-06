@@ -1,3 +1,4 @@
+using ClinicManagement.Api.Authorization;
 using ClinicManagement.Api.Middleware;
 using ClinicManagement.Application.Interfaces;
 using ClinicManagement.Application.Service;
@@ -8,6 +9,7 @@ using ClinicManagement.Infrastructure.Repsitories;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -64,6 +66,10 @@ namespace ClinicManagement.Api
                                     key))
                     };
                 });
+            //── Add Policy ──────────────────────────────────────────────────────────────────
+            builder.Services.AddScoped<IAuthorizationHandler, AppointmentOwnerHandler>();
+            builder.Services.AddScoped<IAuthorizationHandler, ScheduleOwnerRequirementHandler>();
+
             builder.Services.AddAuthorization();
             //── Fulent Vaidation Register ──────────────────────────────────────────────────────────────────
             var applicationAssembly = typeof(AppointmentService).Assembly;

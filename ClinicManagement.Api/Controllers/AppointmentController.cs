@@ -1,4 +1,5 @@
-﻿using ClinicManagement.Application.DTO;
+﻿using ClinicManagement.Api.Authorization;
+using ClinicManagement.Application.DTO;
 using ClinicManagement.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,11 @@ namespace ClinicManagement.Api.Controllers
     public class AppointmentController : BaseController
     {
         private readonly IAppointmentService _appointmentService;
-
-        public AppointmentController(IAppointmentService appointmentService)
+        private readonly IAuthorizationService _authorizationService;
+        public AppointmentController(IAppointmentService appointmentService, IAuthorizationService authorizationService)
         {
             _appointmentService = appointmentService;
+            _authorizationService = authorizationService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -55,8 +57,12 @@ namespace ClinicManagement.Api.Controllers
         public async Task<IActionResult> RescheduleAppointment(Guid Id, [FromBody] RescheduleAppointmentRequest request)
         {
             var PatientAppointment = await _appointmentService.GetAppointmentByIdAsync(Id);
-            if (PatientAppointment?.Data?.PatientId != CurrentUserId)
+            // هنا بيتأكد ان الحجز ده بتاعه فعلا ولا لا 
+            var authResult = await _authorizationService
+                .AuthorizeAsync(User, PatientAppointment.Data, new AppointmentOwnerRequirement());
+            if (!authResult.Succeeded)
                 return Forbid();
+
             return ToResponse(await _appointmentService.RescheduleAppointmentAysnc(Id, request));
         }
         [Authorize(Roles = "Patient,Doctor")]
@@ -64,8 +70,10 @@ namespace ClinicManagement.Api.Controllers
         public async Task<IActionResult> CancelAppointment(Guid Id)
         {
             var PatientAppointment = await _appointmentService.GetAppointmentByIdAsync(Id);
-
-            if (PatientAppointment?.Data?.PatientId != CurrentUserId)
+            // هنا بيتأكد ان الحجز ده بتاعه فعلا ولا لا 
+            var authResult = await _authorizationService
+                .AuthorizeAsync(User, PatientAppointment.Data, new AppointmentOwnerRequirement());
+            if (!authResult.Succeeded)
                 return Forbid();
 
             return ToResponse(await _appointmentService.CancelAppointmentAsync(Id));
@@ -79,8 +87,10 @@ namespace ClinicManagement.Api.Controllers
 
             if (!appointment.Succeeded)
                 return ToResponse(appointment);
-
-            if (!IsAdmin && appointment?.Data?.DoctorId != CurrentUserId)
+            // هنا بيتأكد ان الحجز ده بتاعه فعلا ولا لا 
+            var authResult = await _authorizationService
+                .AuthorizeAsync(User, appointment.Data, new AppointmentOwnerRequirement());
+            if (!authResult.Succeeded)
                 return Forbid();
 
             return ToResponse(await _appointmentService.CompleteAppointmentAsync(Id, status));

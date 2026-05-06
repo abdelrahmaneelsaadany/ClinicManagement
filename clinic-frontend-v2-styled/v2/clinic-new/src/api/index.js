@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE = process.env.REACT_APP_API_URL || 'https://localhost:7047';
+const BASE = process.env.REACT_APP_API_URL || 'http://clinicmanagement.somee.com';
 
 const api = axios.create({ baseURL: BASE, headers: { 'Content-Type': 'application/json' } });
 
