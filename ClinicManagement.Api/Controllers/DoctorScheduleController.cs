@@ -46,7 +46,7 @@ namespace ClinicManagement.Api.Controllers
             var schedule = await _doctorSchedule.GetByIdAsync(Id);
             if (!schedule.Succeeded)
                 return ToResponse(schedule);
-            var authResult = await _authorizationService.AuthorizeAsync(User, schedule, new ScheduleOwnerRequirement());
+            var authResult = await _authorizationService.AuthorizeAsync(User, schedule.Data, new ScheduleOwnerRequirement());
             if (!authResult.Succeeded)
                 return Forbid();
             return ToResponse(await _doctorSchedule.EditActiveSlotsAsync(Id, active));

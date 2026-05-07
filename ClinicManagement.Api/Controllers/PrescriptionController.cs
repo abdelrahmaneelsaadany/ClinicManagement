@@ -1,4 +1,5 @@
-﻿using ClinicManagement.Application.Interfaces;
+﻿using ClinicManagement.Api.Authorization;
+using ClinicManagement.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace ClinicManagement.Api.Controllers
     public class PrescriptionController : BaseController
     {
         private readonly IPrescriptionService _prescriptionService;
+        private readonly IAuthorizationService _authorizationService;
 
-        public PrescriptionController(IPrescriptionService prescriptionService)
+        public PrescriptionController(IPrescriptionService prescriptionService, IAuthorizationService authorizationService)
         {
             _prescriptionService = prescriptionService;
+            _authorizationService = authorizationService;
         }
 
         [Authorize(Roles = "Admin")]
@@ -33,6 +36,15 @@ namespace ClinicManagement.Api.Controllers
         [Authorize(Roles = "Admin,Doctor")]
         [HttpGet("appointment/{appointmentId}")]
         public async Task<IActionResult> GetbyAppointmentId(Guid appointmentId)
-            => ToResponse(await _prescriptionService.GetPrescriptionByAppointmentIdAsync(appointmentId));
+        {
+            var prescription = await _prescriptionService.GetPrescriptionByAppointmentIdAsync(appointmentId);
+
+            var authResult = await _authorizationService.AuthorizeAsync(User, prescription.Data, new PrescriptionOwnerRequirement());
+            if (!authResult.Succeeded)
+                return Forbid();
+
+            return ToResponse(prescription);
+
+        }
     }
 }

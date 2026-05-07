@@ -69,7 +69,7 @@ namespace ClinicManagement.Api
             //── Add Policy ──────────────────────────────────────────────────────────────────
             builder.Services.AddScoped<IAuthorizationHandler, AppointmentOwnerHandler>();
             builder.Services.AddScoped<IAuthorizationHandler, ScheduleOwnerRequirementHandler>();
-
+            builder.Services.AddScoped<IAuthorizationHandler, PrescriptionOwnerHandler>();
             builder.Services.AddAuthorization();
             //── Fulent Vaidation Register ──────────────────────────────────────────────────────────────────
             var applicationAssembly = typeof(AppointmentService).Assembly;
