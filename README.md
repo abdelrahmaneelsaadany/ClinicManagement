@@ -231,5 +231,5 @@ ClinicManagement/
 ## 👨‍💻 Author
 
 **Abdelrahman**
-- GitHub: [@your-username](https://github.com/abdelrahmaneelsaadany)
-- LinkedIn: [your-linkedin](https://linkedin.com/www.linkedin.com/in/abdelrahaman-elsaadany-13685927b)
+- GitHub: [@Github-Profile](https://github.com/abdelrahmaneelsaadany)
+- LinkedIn: [My-linkedin](https://linkedin.com/www.linkedin.com/in/abdelrahaman-elsaadany-13685927b)
