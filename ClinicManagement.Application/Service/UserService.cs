@@ -1,6 +1,7 @@
 ﻿using ClinicManagement.Application.Common;
 using ClinicManagement.Application.DTO;
 using ClinicManagement.Application.Interfaces;
+using ClinicManagement.Domain.Common;
 using ClinicManagement.Domain.Entities;
 using ClinicManagement.Domain.Interfaces;
 

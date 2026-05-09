@@ -163,7 +163,7 @@ User (base identity)
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/ClinicManagement.git
+git clone https://github.com/abdelrahmaneelsaadany/ClinicManagement.git
 
 # Navigate to the project
 cd ClinicManagement
@@ -231,5 +231,5 @@ ClinicManagement/
 ## 👨‍💻 Author
 
 **Abdelrahman**
-- GitHub: [@your-username](https://github.com/your-username)
-- LinkedIn: [your-linkedin](https://linkedin.com/in/your-linkedin)
+- GitHub: [@your-username](https://github.com/abdelrahmaneelsaadany)
+- LinkedIn: [your-linkedin](https://linkedin.com/in/https://www.linkedin.com/in/abdelrahaman-elsaadany-13685927b?utm_source=share_via&utm_content=profile&utm_medium=member_android)

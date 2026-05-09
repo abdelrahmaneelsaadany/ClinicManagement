@@ -163,7 +163,7 @@ User (الحساب الأساسي)
 
 ```bash
 # Clone المشروع
-git clone https://github.com/your-username/ClinicManagement.git
+git clone https://github.com/abdelrahmaneelsaadany/ClinicManagement.git
 
 # ادخل على المشروع
 cd ClinicManagement

@@ -1,5 +1,6 @@
 ﻿using ClinicManagement.Application.Common;
 using ClinicManagement.Application.DTO;
+using ClinicManagement.Domain.Common;
 
 namespace ClinicManagement.Application.Interfaces
 {
