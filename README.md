@@ -232,4 +232,4 @@ ClinicManagement/
 
 **Abdelrahman**
 - GitHub: [@your-username](https://github.com/abdelrahmaneelsaadany)
-- LinkedIn: [your-linkedin](https://linkedin.com/in/https://www.linkedin.com/in/abdelrahaman-elsaadany-13685927b?utm_source=share_via&utm_content=profile&utm_medium=member_android)
+- LinkedIn: [your-linkedin](https://linkedin.com/www.linkedin.com/in/abdelrahaman-elsaadany-13685927b)
