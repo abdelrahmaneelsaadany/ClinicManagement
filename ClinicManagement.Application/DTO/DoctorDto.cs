@@ -12,6 +12,9 @@ namespace ClinicManagement.Application.DTO
         string LastName,
         string Country,
         string Address,
-        UserRole Role
+        UserRole Role,
+        string PhoneNumber,
+        string ClinicAddress,
+        decimal ConsultationFee
         );
 }

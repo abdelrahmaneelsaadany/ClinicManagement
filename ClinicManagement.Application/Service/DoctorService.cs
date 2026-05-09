@@ -65,7 +65,10 @@ namespace ClinicManagement.Application.Service
                 doctor.User.LastName,
                 doctor.User.Address,
                 doctor.User.Country,
-                doctor.User.Role
+                doctor.User.Role,
+                doctor.PhoneNumber,
+                doctor.ClinicAddress,
+                doctor.ConsultationFee
                 );
         private static DoctorSummaryDto MapSummary(Doctor d)
         {
@@ -75,7 +78,10 @@ namespace ClinicManagement.Application.Service
                 d.User.LastName,
                 d.Specialization,
                 d.YearsExperience,
-                d.IsAvailable
+                d.IsAvailable,
+                d.PhoneNumber,
+                d.ClinicAddress,
+                d.ConsultationFee
             );
         }
 

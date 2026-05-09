@@ -2,6 +2,7 @@
 using ClinicManagement.Application.DTO;
 using ClinicManagement.Application.Interfaces;
 using ClinicManagement.Domain.Entities;
+using ClinicManagement.Domain.Enums;
 using ClinicManagement.Domain.Interfaces;
 
 namespace ClinicManagement.Application.Service
@@ -96,6 +97,23 @@ namespace ClinicManagement.Application.Service
                 return Result<DoctorScheduleResponse>.NotFound("No Schedules For This Id");
 
             schedule.IsActive = active;
+            if (!schedule.IsActive)
+            {
+                var appointments = await _unitOfWork.Appointments.GetAppointmentByDoctorId(schedule.DoctorId);
+                var toCancel = appointments.Where(app => app.Status == Status.Scheduled &&
+                app.AppointmentDt > DateTime.UtcNow && (schedule.WeekDay == app.AppointmentDt.DayOfWeek) &&
+                TimeOnly.FromDateTime(app.AppointmentDt) >= schedule.StartTime &&
+                TimeOnly.FromDateTime(app.AppointmentDt) < schedule.EndTime
+                ).ToList();
+
+                foreach (var appointment in toCancel)
+                {
+                    appointment.Status = Status.Cancelled;
+                    await _unitOfWork.Appointments.UpdateAsync(appointment);
+                }
+                await _unitOfWork.SaveChangesAsync();
+            }
+
             await _unitOfWork.SaveChangesAsync();
 
             var doctor = await _unitOfWork.Doctors.GetByIdWithUserAsync(schedule.DoctorId);

@@ -32,6 +32,8 @@ namespace ClinicManagement.Infrastructure.Data
                     .HasForeignKey<Doctor>(u => u.UserId)
                     .OnDelete(DeleteBehavior.Cascade);
                     doctor.Property(sp => sp.Specialization).HasConversion<string>();
+                    doctor.Property(c => c.ConsultationFee).IsRequired();
+                    doctor.Property(p => p.PhoneNumber).IsRequired();
                 });
 
             modelBuilder.Entity<Patient>(pateint =>
@@ -41,6 +43,9 @@ namespace ClinicManagement.Infrastructure.Data
                 .HasForeignKey<Patient>(u => u.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
                 pateint.Property(g => g.Gender).HasConversion<string>();
+                pateint.Property(p => p.PhoneNumber).IsRequired();
+                pateint.Property(p => p.MedicalHistory).IsRequired().HasMaxLength(500);
+                pateint.Property(p => p.DateOfBirth).IsRequired();
             });
 
             modelBuilder.Entity<Admin>(admin =>
@@ -63,6 +68,8 @@ namespace ClinicManagement.Infrastructure.Data
                 at.Property(s => s.Status).HasConversion<string>();
                 at.HasIndex(at => at.PatientId);
                 at.HasIndex(at => at.DoctorId);
+                at.Property(at => at.PaymentStatus).HasConversion<string>();
+
             });
 
             modelBuilder.Entity<Prescription>(p =>

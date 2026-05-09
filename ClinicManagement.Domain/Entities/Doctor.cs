@@ -7,6 +7,9 @@ namespace ClinicManagement.Domain.Entities
         // Forign Keyyyyyyyyyyyyyy Not Primary Key Stupet
         public Guid UserId { get; set; }
         public Specialization Specialization { get; set; }
+        public decimal ConsultationFee { get; set; }
+        public string ClinicAddress { get; set; } = string.Empty;
+        public string PhoneNumber { get; set; } = null!;
         public int? YearsExperience { get; set; }
         public bool IsAvailable { get; set; }
 

@@ -4,6 +4,9 @@ namespace ClinicManagement.Application.DTO
 {
     public record RegisterPatinetDto(
          string Email,
+         string PhoneNumber,
+         DateTime DateOfBirth,
+         string MedicalHistory,
          string Password,
          string FirstName,
          string LastName,

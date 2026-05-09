@@ -79,6 +79,11 @@ namespace ClinicManagement.Api.Controllers
             return ToResponse(await _appointmentService.CancelAppointmentAsync(Id));
         }
 
+        [Authorize(Roles = "Admin")]
+        [HttpPut("pay/{Id}")]
+        public async Task<IActionResult> SetPaid(Guid Id)
+            => ToResponse(await _appointmentService.SetAppointmentPaidAsync(Id));
+
         [Authorize(Roles = "Doctor,Admin")]
         [HttpPut("complete/{Id}")]
         public async Task<IActionResult> CompleteAppointment(Guid Id, [FromBody] CompleteAppointmentStatus status)

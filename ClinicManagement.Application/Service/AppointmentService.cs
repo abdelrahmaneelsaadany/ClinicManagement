@@ -71,7 +71,8 @@ namespace ClinicManagement.Application.Service
                 doctor.Specialization,
                 appointment.AppointmentDt,
                 appointment.Status,
-                appointment.Notes
+                appointment.Notes,
+                appointment.PaymentStatus
             );
 
             return Result<AppointmentDto>.Success(response, 201);
@@ -98,8 +99,16 @@ namespace ClinicManagement.Application.Service
                 return Result<AppointmentDto>.NotFound("appointment Not Found");
 
             if (appointment.Status == Status.Completed)
-                return Result<AppointmentDto>.Failure("Can't Cancel Completed Appointment");
+                return Result<AppointmentDto>.Failure("Can't Completed Appointment , Already Completed");
 
+            if (appointment.Status == Status.Cancelled)
+                return Result<AppointmentDto>.Failure("Can't Complete Canceled Appointment");
+
+            if (appointment.PaymentStatus == PaymentStatus.Pending)
+                return Result<AppointmentDto>.Failure("Can't Complete Appointment Not Paid yet");
+
+            if (appointment.Status != Status.Scheduled)
+                return Result<AppointmentDto>.Failure("Invalid status");
             if (status.Prescriptions.Any())
                 foreach (var p in status.Prescriptions)
                     await _unitOfWork.Prescriptions.AddAsync(new Prescription
@@ -113,8 +122,6 @@ namespace ClinicManagement.Application.Service
                         Notes = p.Notes
                     });
 
-            if (appointment.Status != Status.Scheduled)
-                return Result<AppointmentDto>.Failure("Invalid status");
             appointment.Status = status.Status;
 
             //await _unitOfWork.Appointments.UpdateAsync(appointment); ممكن نستغني عنو لأنو التعديل هيتحفظ مباشره اسرع واحسن 
@@ -123,6 +130,25 @@ namespace ClinicManagement.Application.Service
 
         }
 
+        public async Task<Result<AppointmentDto>> SetAppointmentPaidAsync(Guid Id)
+        {
+            var appointment = await _unitOfWork.Appointments.GetByIdAsync(Id);
+            if (appointment == null)
+                return Result<AppointmentDto>.NotFound();
+
+            if (appointment.Status == Status.Cancelled)
+                return Result<AppointmentDto>.Failure("Can't Pay Canceled Appointment");
+
+            if (appointment.Status == Status.Completed)
+                return Result<AppointmentDto>.Failure("Can't Pay Completed Appointment , Already Paid !!");
+
+            if (appointment.PaymentStatus == PaymentStatus.Paid)
+                return Result<AppointmentDto>.Failure("Appointment Already Paid !!");
+
+            appointment.PaymentStatus = PaymentStatus.Paid;
+            await _unitOfWork.SaveChangesAsync();
+            return Result<AppointmentDto>.Success(MapAppointment(appointment));
+        }
         public async Task<Result<IEnumerable<AppointmentDto>>> GetAppointmentByDoctorIdAsync(Guid doctorId)
         {
             var appointments = await _unitOfWork.Appointments.GetAppointmentByDoctorId(doctorId);
@@ -212,7 +238,8 @@ namespace ClinicManagement.Application.Service
                   dto.Doctor.Specialization,
                   dto.AppointmentDt,
                   dto.Status,
-                  dto.Notes
+                  dto.Notes,
+                  dto.PaymentStatus
                 );
         }
     }

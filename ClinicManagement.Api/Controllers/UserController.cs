@@ -16,7 +16,8 @@ namespace ClinicManagement.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        public async Task<IActionResult> GetAll() => ToResponse(await _userService.GetAllUsersAsync());
+        public async Task<IActionResult> GetAll([FromQuery] int Page, [FromQuery] int PageSize)
+            => ToResponse(await _userService.GetAllUsersAsync(Page, PageSize));
 
         [Authorize(Roles = "Admin,Doctor,Patient")]
         [HttpGet("{id}")]

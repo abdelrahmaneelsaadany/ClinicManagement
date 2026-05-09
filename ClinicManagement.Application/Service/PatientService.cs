@@ -38,6 +38,9 @@ namespace ClinicManagement.Application.Service
                 Gender = patient.Gender,
                 Country = patient.User.Country,
                 Role = patient.User.Role,
+                PhoneNumber = patient.PhoneNumber,
+                DateOfbirth = patient.DateOfBirth,
+                MedicalHistory = patient.MedicalHistory,
             };
         }
     }

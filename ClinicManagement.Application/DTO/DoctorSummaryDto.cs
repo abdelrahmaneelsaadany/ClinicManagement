@@ -8,6 +8,9 @@ namespace ClinicManagement.Application.DTO
         string LastName,
         Specialization Specialization,
         int? YearsExperience,
-        bool IsAvailable
+        bool IsAvailable,
+        string PhoneNumber,
+        string ClinicAddress,
+        decimal ConsultationFee
     );
 }

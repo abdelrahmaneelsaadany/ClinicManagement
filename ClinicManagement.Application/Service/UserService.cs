@@ -15,13 +15,20 @@ namespace ClinicManagement.Application.Service
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Result<IEnumerable<UserResponseDto>>> GetAllUsersAsync()
+        public async Task<Result<PagedResult<UserResponseDto>>> GetAllUsersAsync(int page, int pageSize)
         {
-            var users = await _unitOfWork.Users.GetAllAsync();
-            if (!users.Any())
-                return Result<IEnumerable<UserResponseDto>>.NotFound("No Users Found");
+            var users = await _unitOfWork.Users.GetPagedAsync(page, pageSize);
+            if (!users.Data.Any())
+                return Result<PagedResult<UserResponseDto>>.NotFound("No Users here");
 
-            return Result<IEnumerable<UserResponseDto>>.Success(users.Select(MapUser));
+            return Result<PagedResult<UserResponseDto>>.Success(new PagedResult<UserResponseDto>
+            {
+                Data = users.Data.Select(MapUser),
+                total = users.total,
+                Page = users.Page,
+                PageSize = users.PageSize
+            });
+
         }
 
         public async Task<Result<UserResponseDto>> GetByEmailAsync(string email)

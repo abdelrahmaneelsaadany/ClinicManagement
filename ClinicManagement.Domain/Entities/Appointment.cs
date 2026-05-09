@@ -7,6 +7,7 @@ namespace ClinicManagement.Domain.Entities
         public Guid PatientId { get; set; }
         public Guid DoctorId { get; set; }
         public Status Status { get; set; } = Status.Scheduled;
+        public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Pending;
         public DateTime AppointmentDt { get; set; }
         public string? Notes { get; set; }
 

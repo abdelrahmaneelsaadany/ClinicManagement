@@ -11,6 +11,7 @@ namespace ClinicManagement.Application.Interfaces
         Task<Result<AppointmentDto>> BookAsync(CreateAppointmentReqDto req);
         Task<Result<AppointmentDto>> RescheduleAppointmentAysnc(Guid Id, RescheduleAppointmentRequest req);
         Task<Result<bool>> CancelAppointmentAsync(Guid Id);
+        Task<Result<AppointmentDto>> SetAppointmentPaidAsync(Guid Id);
         Task<Result<AppointmentDto>> CompleteAppointmentAsync(Guid Id, CompleteAppointmentStatus status);
         Task<Result<bool>> DeleteAppointmentAsync(Guid Id);
     }

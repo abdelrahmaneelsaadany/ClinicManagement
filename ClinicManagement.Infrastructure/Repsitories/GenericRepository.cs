@@ -1,4 +1,5 @@
-﻿using ClinicManagement.Domain.Interfaces;
+﻿using ClinicManagement.Domain.Common;
+using ClinicManagement.Domain.Interfaces;
 using ClinicManagement.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,6 @@ namespace ClinicManagement.Infrastructure.Repsitories
         {
             _context = context;
             _dbSet = _context.Set<T>();
-
         }
         public virtual async Task<T> AddAsync(T entity) { await _dbSet.AddAsync(entity); return entity; }
 
@@ -36,6 +36,23 @@ namespace ClinicManagement.Infrastructure.Repsitories
         {
             _dbSet.Update(entity);
             return entity;
+        }
+
+        public async Task<PagedResult<T>> GetPagedAsync(int page, int pageSize)
+        {
+            var total = await _dbSet.CountAsync();
+            var data = await _dbSet
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagedResult<T>
+            {
+                Data = data,
+                total = total,
+                Page = page,
+                PageSize = pageSize
+            };
         }
     }
 

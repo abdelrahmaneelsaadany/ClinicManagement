@@ -4,6 +4,9 @@ namespace ClinicManagement.Application.DTO
 {
     public record RegisterDoctorDto(
          string Email,
+         string PhoneNumber,
+         string ClinicAddress,
+         decimal ConsultationFee,
          string FirstName,
          string Password,
          string LastName,

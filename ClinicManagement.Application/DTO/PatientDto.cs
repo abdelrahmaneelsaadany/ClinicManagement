@@ -2,7 +2,7 @@
 
 namespace ClinicManagement.Application.DTO
 {
-    public record PatientDto
+    public class PatientDto
     {
         public Guid UserId { get; set; }
         public Gender Gender { get; set; }
@@ -12,6 +12,8 @@ namespace ClinicManagement.Application.DTO
         public string Country { get; set; } = string.Empty;
         public UserRole Role { get; set; }
         public string Address { get; set; } = string.Empty;
-
+        public string MedicalHistory { get; set; } = string.Empty;
+        public DateTime DateOfbirth { get; set; }
+        public string PhoneNumber { get; set; } = string.Empty;
     }
 }

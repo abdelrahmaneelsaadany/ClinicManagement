@@ -11,7 +11,8 @@ namespace ClinicManagement.Application.DTO
                 Specialization DoctorSpecialization,
                 DateTime AppointmentDt,
                 Status Status,
-                string? Notes
+                string? Notes,
+                PaymentStatus PaymentStatus
         );
 
 

@@ -7,6 +7,9 @@ namespace ClinicManagement.Domain.Entities
         // Forign Keyyyyyyyyyyyyyy Not Primary Key Stupet
         public Guid UserId { get; set; }
         public Gender Gender { get; set; }
+        public string PhoneNumber { get; set; } = null!;
+        public DateTime DateOfBirth { get; set; }
+        public string MedicalHistory { get; set; } = null!;
 
         // Naviagte 
         public User User { get; set; } = null!;

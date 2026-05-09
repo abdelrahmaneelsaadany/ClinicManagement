@@ -57,6 +57,9 @@ namespace ClinicManagement.Application.Service
             {
                 UserId = user.Id,
                 Specialization = doctor.Specialization,
+                ConsultationFee = doctor.ConsultationFee,
+                ClinicAddress = doctor.ClinicAddress,
+                PhoneNumber = doctor.PhoneNumber,
                 YearsExperience = doctor.YearsExperience,
                 IsAvailable = true,
             });
@@ -92,7 +95,10 @@ namespace ClinicManagement.Application.Service
             await _unitOfWork.Patients.AddAsync(new Patient
             {
                 UserId = user.Id,
-                Gender = patient.Gender
+                Gender = patient.Gender,
+                PhoneNumber = patient.PhoneNumber,
+                DateOfBirth = patient.DateOfBirth,
+                MedicalHistory = patient.MedicalHistory,
             });
 
             var accessTokne = _jwtService.GenerateToken(user.Id, user.Email, user.Role.ToString());
